@@ -1,0 +1,20 @@
+{
+  "name": "h5-template",
+  "version": "1.0.0",
+  "description": "'h5 project'",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development webpack serve --hot -c webpack.config.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhu-cli-organization/h5-template.git"
+  },
+  "author": "zwj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhu-cli-organization/h5-template/issues"
+  },
+  "homepage": "https://github.com/zhu-cli-organization/h5-template#readme"
+}
