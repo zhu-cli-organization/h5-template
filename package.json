@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=development webpack serve --hot -c webpack.config.js "
+    "dev": "NODE_ENV=development webpack serve --hot -c webpack.config.js ",
+    "build": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,18 @@
   "bugs": {
     "url": "https://github.com/zhu-cli-organization/h5-template/issues"
   },
-  "homepage": "https://github.com/zhu-cli-organization/h5-template#readme"
+  "homepage": "https://github.com/zhu-cli-organization/h5-template#readme",
+  "dependencies": {
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "prettier": "^2.8.4",
+    "react": "^18.2.0",
+    "webpack": "^5.76.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "eslint-plugin-react": "^7.32.2"
+  }
 }
