@@ -1,31 +1,50 @@
+// 项目所有资源编译，构建，打包的配置文件
+
 const path = require('path');
 const MiniCssEaxtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 // const CopyPlugin = require('copy-webpack-plugin');
-const  ReactRefreshWebpackPlugin= require('react-refresh-webpack-plugin');
+const  ReactRefreshWebpackPlugin= require('@pmmmwh/react-refresh-webpack-plugin'); // 更快的热更新
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const {isDev} = require('@src/utils/env');
+// const { resolve } = require('path');
 
+const isDev = process.env.NODE_ENV==='development';
 module.exports = {
     // entry:'./src/index.ts', //SPA
+    // webpack:{
+    //     alias:{
+    //         '@':resolve('src')
+    //     }
+    // },
     entry:{
-        index:'./src/index.ts',
-        start:{
-            dependOn:'index', // index页面先启动，才能启动start
-            import:'./src/start/index.tsx',
-            filename:'[start].[contenthash].js',
-            // publicPath:'',
-        }
+        index:'./src/index.tsx',
+        // start:{
+        //     dependOn:'index', // index页面先启动，才能启动start
+        //     import:'./src/start/index.tsx',
+        //     filename:'[start].[contenthash].js',
+        //     // publicPath:'',
+        // }
     },
     output: {
         path: path.resolve(__dirname, 'dist'), // 文件输出地址，必须是绝对路径
         filename: '[name].[contenthash].js', // bundle的名字,bundle要插入html文件中哦
     },
+    devtool: isDev ? 'source-map' : false,
+    devServer: {
+        static: {
+          directory: path.join(__dirname, 'public'),
+        },
+        compress: true,
+        port: 9000,
+      },
     
     module: {
         rules: [
             {
                 test: /\.(m?js|jsx|ts|tsx)$/,
+                exclude: /node_modules/, // 排除
                 use: {
                     loader: 'swc-loader',
                     options: {
@@ -118,14 +137,7 @@ module.exports = {
         new webpack.DefinePlugin({ // 定义dev环境下，process.env全局常量
             PUBLIC_URL:path.resolve('.')
         }),
-        // new CopyPlugin({
-        //     patterns:[
-        //         {
-        //             from:'assets',to:'public' // 将assets中的文件不进行打包，直接复制到结果public中
-        //         }
-        //     ]
-        // })
-        isDev? new ReactRefreshWebpackPlugin():null, // 开发时 热更新
+        // isDev? new ReactRefreshWebpackPlugin():null, // 开发时 热更新
         new HtmlWebpackPlugin({
             template:'./src/index.html',
             filename:'start.html',// 这是bundle入口，打成bundle.js插入start.html
@@ -144,4 +156,4 @@ module.exports = {
     ]
 }
 
-moudle.exports.parallelism=1;
+module.exports.parallelism=1;

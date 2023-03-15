@@ -1,0 +1,44 @@
+ // ts编译器的配置文件，指定被编译的ts或者js文件以及编译选项
+{
+    "compilerOptions": {
+        "noEmit": true,  // 因为webpack指定输入文件，此处省略
+        "pretty": true,   // ts语法错误时，文字样式
+        "module": "ES6",  // ts文件中import 进来的模块是什么类型的；或者最终编译成的模块类型
+        "target": "ES6", // 最终生成的js文件的目标版本es3,5,6...
+        "baseUrl": ".",    // 相对模块导入的默认基本地址
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,  // 防止import引入commonJs模块报错
+        "declaration": true, // 每编译一个ts文件，生成js和.d.ts文件,不能和allowJs同时设置为true
+        "allowJs": false, // 允许编译js文件
+        // "moduleResolution": "classic", 
+        "experimentalDecorators": true, // 启用装饰器
+        "jsx": "react", // 在.tsx中支持jsx
+        "lib": [  // 编译过程中需要用到的库文件
+            "DOM",
+            "DOM.Iterable",
+            "ES6",
+            "ScriptHost"
+        ],
+        "noImplicitAny": true,  
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "paths":{
+            "@/*":["src/*"],  // 所有的相对路径是相对于本文件
+            "@utils/*":["src/utils/*"]
+        },
+        // "typeRoots":["./typings"] // 设置以后只会将typings下的d.ts文件包含进来
+        // "types":["lodash","antd"] // 设置以后只会将node_modules下这两个@types加入编译，其他node_modules不加
+    },
+    // "files": [
+    //     "core.ts"
+    // ],
+    "include": [
+        "src/**/*",
+        "**/*/.d.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    // "extentds":"./tsconfig-common.json" // 从该文件继承配置
+}

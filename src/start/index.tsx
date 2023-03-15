@@ -1,8 +1,14 @@
-import React from 'react'
+import React from 'react';
+import ReactDOM from 'react-dom';
+ 
 
+ 
+export interface StartProps {}
 
-export const Start = ()=>{
-    return <div>
-        启动页
-    </div>
-}
+const Start: React.FC<StartProps> = () => {
+  return (
+    <div>hello</div>
+  );
+};
+
+ ReactDOM.render(<Start />, document.querySelector('#app') as HTMLDivElement);
