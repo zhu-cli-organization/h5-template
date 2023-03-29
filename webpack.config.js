@@ -5,25 +5,22 @@ const MiniCssEaxtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 // const CopyPlugin = require('copy-webpack-plugin');
-const  ReactRefreshWebpackPlugin= require('@pmmmwh/react-refresh-webpack-plugin'); // 更快的热更新
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const {isDev} = require('@src/utils/env');
 // const { resolve } = require('path');
+const TerserPlugin = require('terser-webpack-plugin'); // webpack5默认内置第三方，并开启多线程压缩。
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+// const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
+// const productionGzipExtensions = ['js', 'css'];
 const isDev = process.env.NODE_ENV==='development';
-module.exports = {
-    // entry:'./src/index.ts', //SPA
-    // webpack:{
-    //     alias:{
-    //         '@':resolve('src')
-    //     }
-    // },
+ const baseConfig= {
     entry:{
         index:'./src/index.tsx',
+        start:'./src/start/index.tsx'
         // start:{
-        //     dependOn:'index', // index页面先启动，才能启动start
+        //     // dependOn:'index', // index页面先启动，才能启动start
         //     import:'./src/start/index.tsx',
-        //     filename:'[start].[contenthash].js',
+        //     filename:'[name].[contenthash].js',
         //     // publicPath:'',
         // }
     },
@@ -31,7 +28,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'), // 文件输出地址，必须是绝对路径
         filename: '[name].[contenthash].js', // bundle的名字,bundle要插入html文件中哦
     },
-    devtool: isDev ? 'source-map' : false,
+    
     devServer: {
         static: {
           directory: path.join(__dirname, 'public'),
@@ -137,23 +134,51 @@ module.exports = {
         new webpack.DefinePlugin({ // 定义dev环境下，process.env全局常量
             PUBLIC_URL:path.resolve('.')
         }),
-        // isDev? new ReactRefreshWebpackPlugin():null, // 开发时 热更新
-        new HtmlWebpackPlugin({
+         new HtmlWebpackPlugin({
             template:'./src/index.html',
             filename:'start.html',// 这是bundle入口，打成bundle.js插入start.html
             title:'开始', // 替换模板字符串
             inject:'body', // body表示将<script>插入body bottom
             // publicPath:'js' , 
-            chunk:['start'], //  对应entry里面的chunk
+            chunks:['start'], //  对应entry里面的chunk
         }),
         new HtmlWebpackPlugin({
             template:'./src/index.html',
             filename:'index.html', 
             title:'首页',  
             inject:'body',  
-            chunk:['index'], //  
-        })
-    ]
+            chunks:['index'], //  
+        }),
+        new CssMinimizerPlugin({
+            parallel:true
+        }),
+        // new webpack.IgnorePlugin({  // 打包的时候忽略moment的语言包local文件夹
+        //     resourceRegExp:/^\.\/local$/,
+        //     contextRegExp:/moment$/
+        // })
+        // new CompressionWebpackPlugin({ //zip压缩插件
+        //     filename: '[path].gz[query]',
+        //     algorithm: 'gzip',
+        //     test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),//匹配文件名
+        //     threshold: 10240,//对10K以上的数据进行压缩
+        //     minRatio: 0.8,
+        //     deleteOriginalAssets: false,//是否删除源文件
+        // })
+    ],
+    optimization:{
+        minimize:true, // 压缩
+        minimizer:[
+            new TerserPlugin({
+                parallel:true, // 并行
+            })
+        ]
+    },
+   
+    // performance:{
+    //     maxEntrypointSize:100000000,
+    //     maxAssetSize:100000000
+    // }
 }
 
 module.exports.parallelism=1;
+module.exports = baseConfig;

@@ -1,14 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
  
 
  
 export interface StartProps {}
 
-const Start: React.FC<StartProps> = () => {
+function Start(){
   return (
     <div>hello</div>
   );
 };
 
- ReactDOM.render(<Start />, document.querySelector('#app') as HTMLDivElement);
+ ReactDOM.createRoot( document.querySelector('#app') as HTMLDivElement).render(<Start />);

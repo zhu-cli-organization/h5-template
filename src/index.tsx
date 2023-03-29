@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
  
-
- 
 export interface MatchProps {}
 
-const Index: React.FC<MatchProps> = () => {
+function Index(){
   return (
     <div>hello</div>
   );
