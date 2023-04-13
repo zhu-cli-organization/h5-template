@@ -15,8 +15,8 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const isDev = process.env.NODE_ENV==='development';
  const baseConfig= {
     entry:{
-        index:'./src/index.tsx',
-        start:'./src/start/index.tsx'
+        index:'./src/demo/index.tsx',
+        // start:'./src/start/index.tsx'
         // start:{
         //     // dependOn:'index', // index页面先启动，才能启动start
         //     import:'./src/start/index.tsx',

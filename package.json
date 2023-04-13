@@ -2,7 +2,7 @@
   "name": "h5-template",
   "version": "1.0.0",
   "description": "'h5 project'",
-  "main": "src/index.ts",
+  "main": "src/demo/index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=development webpack serve --hot -c webpack.dev.js ",
@@ -41,6 +41,8 @@
     "react-dom": "^18.2.0",
     "react-refresh": "^0.14.0",
     "speed-measure-webpack-plugin": "^1.5.0",
+    "style-loader": "^3.3.2",
+    "style-resources-loader": "^1.5.0",
     "swc-loader": "^0.2.3",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript": "^4.9.5",
